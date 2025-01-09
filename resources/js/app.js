@@ -20,6 +20,9 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('card-component', require('./components/Card.vue').default);
+Vue.component('form-component', require('./components/Formulario.vue').default);
+
+Vue.prototype.$eventBus = new Vue();
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -13,6 +13,8 @@ class Articulo extends Model
     protected $fillable = [
         'name',
         'content',
-        'status'
+        'status',
+        'quantity',
+        'image',
     ];
 }

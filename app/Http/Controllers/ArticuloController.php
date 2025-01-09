@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Articulo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 
 class ArticuloController extends Controller
 {
@@ -16,7 +15,8 @@ class ArticuloController extends Controller
     public function index()
     {
         //
-        return Articulo::all();
+        return response()->json(Articulo::all());
+        
     }
 
     /**
@@ -39,7 +39,31 @@ class ArticuloController extends Controller
     public function store(Request $request)
     {
         //
-        return Articulo::create($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255|unique:articulos,name',
+            'content' => 'required|string',
+            'status' => 'required|string',
+            'quantity' => 'required|integer|min:1',
+            'image' => 'required|image|max:2048',
+        ]);
+
+        $imageData = base64_encode(file_get_contents($request->file('image')->getRealPath()));
+
+        $articuloEncontrado = Articulo::where('name', $request->name)->first();
+
+        if(!$articuloEncontrado){ //verificar que el articulo no exista
+            $articulo = Articulo::create([
+            'name' => $request->name,
+            'content' => $request->content,
+            'status' => $request->status,
+            'quantity' => $request->quantity,
+            'image' => $imageData, // Imagen en base64
+            ]); 
+        }else{
+            return response()->json(['message' => 'El articulo ya existe'], 422);
+        }
+
+        return response()->json(['message' => 'Articulo creado correctamente', ' articulo' => $articulo], 201);
     }
 
     /**

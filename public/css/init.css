@@ -1,0 +1,20 @@
+.supercontainer{
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+}
+
+.containerInfo{
+    margin-left: 10vw;
+}
+
+.formulario{
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 33px;
+}
+
+.tarjeta{
+    background-color: white;
+}
+
