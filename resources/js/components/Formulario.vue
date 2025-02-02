@@ -7,21 +7,14 @@
                     class="mt-1 p-2 w-full border-gray-100 rounded-md shadow-sm">
             </div>
             <div>
-                <label for="content" class="text-md font-medium text-gray-700">Contenido:</label>
-                <input type="text" id="content" v-model="formData.content"
+                <label for="description" class="text-md font-medium text-gray-700">Descripción:</label>
+                <input type="text" id="description" v-model="formData.description"
                     class="mt-1 p-2 w-full border-gray-100 rounded-md shadow-sm">
             </div>
             <div>
-                <label for="status" class="text-md font-medium text-gray-700">Estado:</label>
-                <select
-                id="status"
-                v-model="formData.status"
-                class="mt-1 p-2 w-full border-gray-100 rounded-md shadow-sm"
-                required
-                >
-                <option value="Disponible">Disponible</option>
-                <option value="No Disponible">No Disponible</option>
-                </select>
+                <label for="price" class="text-md font-medium text-gray-700">Precio:</label>
+                <input type="number" id="price" v-model="formData.price"
+                    class="mt-1 p-2 w-full border-gray-100 rounded-md shadow-sm" min="1" step="1" required>
             </div>
             <div>
                 <label for="quantity" class="text-md font-medium text-gray-700">Cantidad:</label>
@@ -34,9 +27,8 @@
                     class="mt-1 w-full text-sm text-gray-900 border border-gray-100 rounded-lg cursor-pointer">
             </div>
             <div>
-                <button type="submit" 
-                        class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 ">
-                    Guardar
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 ">
+                    Enviar al carrito
                 </button>
             </div>
             <div class="">
@@ -45,7 +37,7 @@
                     class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
                     @click="eliminarArticulos()"
                 >
-                    Eliminar Seleccionados
+                    Eliminar del carrito
                 </button>
             </div>
         </form>
@@ -59,8 +51,8 @@
             return {
                 formData: {
                     name: "",
-                    content: "",
-                    status: "Disponible",
+                    description: "",
+                    price: 0,
                     quantity: 1,
                     image: null,
                 },
@@ -74,14 +66,13 @@
                 try {
                     const formData = new FormData();
                     formData.append('name', this.formData.name);
-                    formData.append('content', this.formData.content);
-                    formData.append('status', this.formData.status);
+                    formData.append('description', this.formData.description);
+                    formData.append('price', this.formData.price);
                     formData.append('quantity', this.formData.quantity);
                     if (this.formData.image) {
                         formData.append('image', this.formData.image);
                     }
 
-                    // Enviar los datos al backend
                     const response = await axios.post('http://127.0.0.1:8000/api/articulos', formData, {
                         headers: {
                             "Content-Type": "multipart/form-data",

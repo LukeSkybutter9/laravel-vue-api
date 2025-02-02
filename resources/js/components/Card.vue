@@ -37,7 +37,6 @@
             }
         },
         toggleSelect(id) {
-            // Alternar la selección de una tarjeta agregando el id al array selectedIds
             if (this.selectedIds.includes(id)) {
                 this.selectedIds = this.selectedIds.filter(selectedId => selectedId !== id);
             } else {

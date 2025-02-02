@@ -16,7 +16,6 @@ class ArticuloController extends Controller
     {
         //
         return response()->json(Articulo::all());
-        
     }
 
     /**
@@ -41,8 +40,8 @@ class ArticuloController extends Controller
         //
         $request->validate([
             'name' => 'required|string|max:255|unique:articulos,name',
-            'content' => 'required|string',
-            'status' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0.01',
             'quantity' => 'required|integer|min:1',
             'image' => 'required|image|max:2048',
         ]);
@@ -54,8 +53,8 @@ class ArticuloController extends Controller
         if(!$articuloEncontrado){ //verificar que el articulo no exista
             $articulo = Articulo::create([
             'name' => $request->name,
-            'content' => $request->content,
-            'status' => $request->status,
+            'description' => $request->description,
+            'price' => $request->price,
             'quantity' => $request->quantity,
             'image' => $imageData, // Imagen en base64
             ]); 
@@ -75,7 +74,7 @@ class ArticuloController extends Controller
     public function show($id)
     {
         //
-        return Articulo::find($id);    
+        return Articulo::find($id);
     }
 
     /**

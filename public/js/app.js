@@ -1955,7 +1955,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }))();
     },
     toggleSelect: function toggleSelect(id) {
-      // Alternar la selección de una tarjeta agregando el id al array selectedIds
       if (this.selectedIds.includes(id)) {
         this.selectedIds = this.selectedIds.filter(function (selectedId) {
           return selectedId !== id;
@@ -2032,8 +2031,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     return {
       formData: {
         name: "",
-        content: "",
-        status: "Disponible",
+        description: "",
+        price: 0,
         quantity: 1,
         image: null
       }
@@ -2053,14 +2052,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _context.prev = 0;
               formData = new FormData();
               formData.append('name', _this.formData.name);
-              formData.append('content', _this.formData.content);
-              formData.append('status', _this.formData.status);
+              formData.append('description', _this.formData.description);
+              formData.append('price', _this.formData.price);
               formData.append('quantity', _this.formData.quantity);
               if (_this.formData.image) {
                 formData.append('image', _this.formData.image);
               }
-
-              // Enviar los datos al backend
               _context.next = 9;
               return axios.post('http://127.0.0.1:8000/api/articulos', formData, {
                 headers: {
@@ -2205,66 +2202,59 @@ var render = function render() {
   })]), _vm._v(" "), _c("div", [_c("label", {
     staticClass: "text-md font-medium text-gray-700",
     attrs: {
-      "for": "content"
+      "for": "description"
     }
-  }, [_vm._v("Contenido:")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Descripción:")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.formData.content,
-      expression: "formData.content"
+      value: _vm.formData.description,
+      expression: "formData.description"
     }],
     staticClass: "mt-1 p-2 w-full border-gray-100 rounded-md shadow-sm",
     attrs: {
       type: "text",
-      id: "content"
+      id: "description"
     },
     domProps: {
-      value: _vm.formData.content
+      value: _vm.formData.description
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.formData, "content", $event.target.value);
+        _vm.$set(_vm.formData, "description", $event.target.value);
       }
     }
   })]), _vm._v(" "), _c("div", [_c("label", {
     staticClass: "text-md font-medium text-gray-700",
     attrs: {
-      "for": "status"
+      "for": "price"
     }
-  }, [_vm._v("Estado:")]), _vm._v(" "), _c("select", {
+  }, [_vm._v("Precio:")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.formData.status,
-      expression: "formData.status"
+      value: _vm.formData.price,
+      expression: "formData.price"
     }],
     staticClass: "mt-1 p-2 w-full border-gray-100 rounded-md shadow-sm",
     attrs: {
-      id: "status",
+      type: "number",
+      id: "price",
+      min: "1",
+      step: "1",
       required: ""
     },
+    domProps: {
+      value: _vm.formData.price
+    },
     on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.formData, "status", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "price", $event.target.value);
       }
     }
-  }, [_c("option", {
-    attrs: {
-      value: "Disponible"
-    }
-  }, [_vm._v("Disponible")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "No Disponible"
-    }
-  }, [_vm._v("No Disponible")])])]), _vm._v(" "), _c("div", [_c("label", {
+  })]), _vm._v(" "), _c("div", [_c("label", {
     staticClass: "text-md font-medium text-gray-700",
     attrs: {
       "for": "quantity"
@@ -2317,7 +2307,7 @@ var render = function render() {
         return _vm.eliminarArticulos();
       }
     }
-  }, [_vm._v("\n                Eliminar Seleccionados\n            ")])])])]);
+  }, [_vm._v("\n                Eliminar del carrito\n            ")])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -2327,7 +2317,7 @@ var staticRenderFns = [function () {
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("\n                Guardar\n            ")])]);
+  }, [_vm._v("\n                Enviar al carrito\n            ")])]);
 }];
 render._withStripped = true;
 
